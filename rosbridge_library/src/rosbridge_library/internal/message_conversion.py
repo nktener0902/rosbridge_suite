@@ -240,9 +240,9 @@ def _from_list_inst(inst, rostype):
 
     # Remove the list indicators from the rostype
     try:
-        rostype = re.search(list_tokens, rostype).group(1)
+        rostype = re.search(list_tokens, rostype).group(1).split(",")[0]
     except AttributeError:
-        rostype = re.search(bounded_array_tokens, rostype).group(1)
+        rostype = re.search(bounded_array_tokens, rostype).group(1).split(",")[0]
 
     # Shortcut for primitives
     if rostype in ros_primitive_types:
@@ -373,9 +373,9 @@ def _to_list_inst(msg, rostype, roottype, inst, stack):
 
     # Remove the list indicators from the rostype
     try:
-        rostype = re.search(list_tokens, rostype).group(1)
+        rostype = re.search(list_tokens, rostype).group(1).split(",")[0]
     except AttributeError:
-        rostype = re.search(bounded_array_tokens, rostype).group(1)
+        rostype = re.search(bounded_array_tokens, rostype).group(1).split(",")[0]
 
     # Call to _to_inst for every element of the list
     return [_to_inst(x, rostype, roottype, None, stack) for x in msg]
